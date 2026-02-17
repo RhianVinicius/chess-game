@@ -4,10 +4,13 @@ import 'package:chess_game/models/position.dart';
 class Bishop implements Piece {
   @override final String color;
   @override Position position;
+  @override late String assetPath;
   static const List<List<int>> directions = [[1, 1], [1, -1], [-1, -1], [-1, 1]];
 
 
-  Bishop(this.color, this.position);
+  Bishop(this.color, this.position) {
+    assetPath = _getImage();
+  }
 
 
   @override
@@ -28,5 +31,16 @@ class Bishop implements Piece {
       }
     } 
     return positions;
+  }
+
+
+  String _getImage() {
+    switch (color) {
+      case 'white': return 'lib/assets/white_bishop.png';
+
+      case 'black': return 'lib/assets/black_bishop.png';
+
+      default: return ''; 
+    } 
   }
 }

@@ -4,9 +4,12 @@ import 'package:chess_game/models/position.dart';
 class Knight implements Piece {
   @override final String color;
   @override Position position;
+  @override late String assetPath;
   static const List<List<int>> jumps = [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]];
 
-  Knight(this.color, this.position);
+  Knight(this.color, this.position) {
+    assetPath = _getImage();
+  }
 
   @override
   List<Position> possiblePositions() {
@@ -20,5 +23,15 @@ class Knight implements Piece {
       if (newPosition != null) positions.add(newPosition);
     }
     return positions;
+  }
+
+  String _getImage() {
+    switch (color) {
+      case 'white': return 'lib/assets/white_knight.png';
+
+      case 'black': return 'lib/assets/black_knight.png';
+
+      default: return ''; 
+    } 
   }
 }

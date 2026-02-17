@@ -4,11 +4,14 @@ import 'package:chess_game/models/position.dart';
 class Rook implements Piece {
   @override final String color;
   @override Position position;
+  @override late String assetPath;
   bool alreadyMoved;
   static const List<List<int>> directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
   
 
-  Rook(this.color, this.position, {this.alreadyMoved = false});
+  Rook(this.color, this.position, {this.alreadyMoved = false}) {
+    assetPath = _getImage();
+  }
 
 
   @override
@@ -29,5 +32,15 @@ class Rook implements Piece {
       }
     }
     return positions;
+  }
+
+  String _getImage() {
+    switch (color) {
+      case 'white': return 'lib/assets/white_rook.png';
+
+      case 'black': return 'lib/assets/black_rook.png';
+
+      default: return ''; 
+    } 
   }
 }

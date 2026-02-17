@@ -4,9 +4,12 @@ import 'package:chess_game/models/position.dart';
 class Queen implements Piece {
   @override final String color;
   @override Position position;
+  @override late String assetPath;
   static const List<List<int>> directions = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]];
 
-  Queen(this.color, this.position);
+  Queen(this.color, this.position) {
+    assetPath = _getImage();
+  }
 
   @override
   List<Position> possiblePositions() {
@@ -26,5 +29,15 @@ class Queen implements Piece {
       }
     }
     return positions;
+  }
+
+  String _getImage() {
+    switch (color) {
+      case 'white': return 'lib/assets/white_queen.png';
+
+      case 'black': return 'lib/assets/black_queen.png';
+
+      default: return ''; 
+    } 
   }
 }

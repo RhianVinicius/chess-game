@@ -21,7 +21,7 @@ class ChessView extends StackedView<ChessViewModel> {
                 children: [
                   Image.asset('lib/assets/board.png', fit:BoxFit.contain),
 
-                  ...viewModel.board.boardPieces.map((piece) {
+                  ...viewModel.currentEngine.board.boardPieces.map((piece) {
                     return Positioned(
                       left: squareSize * piece.position.x,
                       bottom: squareSize * piece.position.y,
@@ -29,14 +29,14 @@ class ChessView extends StackedView<ChessViewModel> {
                       height: squareSize,
                       child: GestureDetector(
                         onTap: () {
-                          // To-do: Show legal moves to do  
+                          viewModel.onPieceTapped(piece);  
                         },
                         child: Image.asset(piece.assetPath, fit: BoxFit.contain),
                       )
                     );
                   }),
 
-                  ...viewModel.board.selectedPositions.map((position) {
+                  ...viewModel.currentEngine.legalPositions.map((position) {
                     return Positioned(
                       left: squareSize * position.x,
                       bottom: squareSize * position.y,
@@ -44,7 +44,7 @@ class ChessView extends StackedView<ChessViewModel> {
                       height: squareSize,
                       child: GestureDetector(
                         onTap: () {
-                          // To-do: Implemet movement/take
+                          viewModel.onPositionTapped(position);
                         },
                         child: Opacity(
                           opacity: 0.25,

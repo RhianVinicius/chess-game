@@ -1,14 +1,15 @@
-import 'package:chess_game/models/piece.dart';
+import 'package:chess_game/models/pieces/piece.dart';
 import 'package:chess_game/models/position.dart';
 
 class Pawn implements Piece {
   @override final String color;
   @override Position position;
   @override late String assetPath;
+  @override bool alreadyMoved;
   static const List<List<int>> steps = [[0, 1], [0, 2], [1, 1], [-1, 1]];
-  bool alredyMoved;
+  
 
-  Pawn(this.color, this.position, {this.alredyMoved = false}) {
+  Pawn(this.color, this.position, {this.alreadyMoved = false}) {
     assetPath = _getImage();
   }
 
@@ -24,6 +25,11 @@ class Pawn implements Piece {
       if (newPosition != null) positions.add(newPosition);
     }
     return positions;
+  }
+
+  @override
+  void setPosition(Position newPosition) {
+    position = newPosition; 
   }
 
   String _getImage() {

@@ -1,13 +1,14 @@
-import 'package:chess_game/models/piece.dart';
+import 'package:chess_game/models/pieces/piece.dart';
 import 'package:chess_game/models/position.dart';
 
 class Queen implements Piece {
   @override final String color;
   @override Position position;
   @override late String assetPath;
+  @override bool alreadyMoved;
   static const List<List<int>> directions = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]];
 
-  Queen(this.color, this.position) {
+  Queen(this.color, this.position, {this.alreadyMoved = false}) {
     assetPath = _getImage();
   }
 
@@ -29,6 +30,11 @@ class Queen implements Piece {
       }
     }
     return positions;
+  }
+
+  @override
+  void setPosition(Position newPosition) {
+    position = newPosition; 
   }
 
   String _getImage() {

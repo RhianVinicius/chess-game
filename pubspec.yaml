@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   stacked: ^3.4.0
+  audioplayers: ^6.0.0
 
 
 dev_dependencies:
@@ -38,5 +39,8 @@ flutter:
     - lib/assets/white_knight.png
     - lib/assets/white_rook.png
     - lib/assets/white_pawn.png
-    - lib/assets/select_dot_small.png
-    - lib/assets/select_dot_big.png
+    - lib/assets/select_dot.png
+
+    - lib/assets/piece_move.mp4
+    - lib/assets/piece_move_check.mp4
+    - lib/assets/click.mp3

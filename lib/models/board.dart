@@ -1,4 +1,4 @@
-import 'package:chess_game/models/piece.dart';
+import 'package:chess_game/models/pieces/piece.dart';
 import 'package:chess_game/models/pieces/bishop.dart';
 import 'package:chess_game/models/pieces/king.dart';
 import 'package:chess_game/models/pieces/knight.dart';
@@ -8,35 +8,77 @@ import 'package:chess_game/models/pieces/rook.dart';
 import 'package:chess_game/models/position.dart';
 
 class Board {
-  late List<Piece> boardPosition;
-  String playerTurn = 'white';
+  late List<Piece> boardPieces;
+
+  Board({bool autoPlacePieces = true}) {
+    boardPieces = _buildBorad(autoPlacePieces);
+  }
 
 
-  Board() {
-    boardPosition = _buildBorad();
+  Board generateCopy() {
+    Board newBoard = Board(autoPlacePieces: false);
+
+    for (Piece piece in boardPieces) {
+      Piece? newPiece;
+
+      if (piece is King) newPiece = King(piece.color, Position(piece.position.x, piece.position.y));
+      
+      if (piece is Queen) newPiece = Queen(piece.color, Position(piece.position.x, piece.position.y));
+
+      if (piece is Bishop)  newPiece = Bishop(piece.color, Position(piece.position.x, piece.position.y));
+
+      if (piece is Rook) newPiece = Rook(piece.color, Position(piece.position.x, piece.position.y)); 
+
+      if (piece is Knight) newPiece = Knight(piece.color, Position(piece.position.x, piece.position.y));
+
+      if (piece is Pawn) newPiece = Pawn(piece.color, Position(piece.position.x, piece.position.y));
+
+
+      newBoard.boardPieces.add(newPiece!);    
+    }
+    return newBoard;
   }
 
 
   bool pieceInPosition(Position position) {
-    for (Piece piece in boardPosition) {
+    for (Piece piece in boardPieces) {
       if (position.positionName == piece.position.positionName) return true;
     }
     return false;
   }
 
 
-  List<Piece> _buildBorad() {
+  Piece? getPieceInPosition(Position position) {
+    for (Piece piece in boardPieces) {
+      if (position.positionName == piece.position.positionName) return piece;
+    }
+    return null;
+  }
+
+
+  void destroyPiece(Position position) {
+    boardPieces.removeWhere((piece) => piece.position.x == position.x && piece.position.y == position.y);
+  }
+
+
+  List<Piece> _buildBorad(bool autoPlacePieces) {
     List<Piece> initialPosition = [];
 
-    _placeWhitePieces(initialPosition);
-    _placeBlackPieces(initialPosition);
+    if (autoPlacePieces) {
+      _placeWhitePieces(initialPosition);
+      _placeBlackPieces(initialPosition);
+    }
 
     return initialPosition;
   }
 
   void _placeWhitePieces(List<Piece> boardPosition) {
-    boardPosition.add(King('white', Position(3, 0))); 
-    boardPosition.add(Queen('white', Position(4, 0)));
+    Pawn peao;
+    peao = Pawn('white', Position(1, 2));
+    peao.alreadyMoved = true;
+
+    boardPosition.add(King('white', Position(4, 0))); 
+    boardPosition.add(Queen('white', Position(3, 0)));
     boardPosition.add(Bishop('white', Position(2, 0)));
     boardPosition.add(Bishop('white', Position(5, 0)));
     boardPosition.add(Knight('white', Position(1, 0)));
@@ -55,8 +97,8 @@ class Board {
   }
 
   void _placeBlackPieces(List<Piece> boardPosition) {
-    boardPosition.add(King('black', Position(3, 7))); 
-    boardPosition.add(Queen('black', Position(4, 7)));
+    boardPosition.add(King('black', Position(4, 7))); 
+    boardPosition.add(Queen('black', Position(3, 7)));
     boardPosition.add(Bishop('black', Position(2, 7)));
     boardPosition.add(Bishop('black', Position(5, 7)));
     boardPosition.add(Knight('black', Position(1, 7)));

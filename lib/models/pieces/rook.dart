@@ -1,11 +1,11 @@
-import 'package:chess_game/models/piece.dart';
+import 'package:chess_game/models/pieces/piece.dart';
 import 'package:chess_game/models/position.dart';
 
 class Rook implements Piece {
   @override final String color;
   @override Position position;
   @override late String assetPath;
-  bool alreadyMoved;
+  @override bool alreadyMoved;
   static const List<List<int>> directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
   
 
@@ -32,6 +32,11 @@ class Rook implements Piece {
       }
     }
     return positions;
+  }
+
+  @override
+  void setPosition(Position newPosition) {
+    position = newPosition; 
   }
 
   String _getImage() {

@@ -1,14 +1,15 @@
-import 'package:chess_game/models/piece.dart';
+import 'package:chess_game/models/pieces/piece.dart';
 import 'package:chess_game/models/position.dart';
 
 class Bishop implements Piece {
   @override final String color;
   @override Position position;
   @override late String assetPath;
+  @override bool alreadyMoved;
   static const List<List<int>> directions = [[1, 1], [1, -1], [-1, -1], [-1, 1]];
 
 
-  Bishop(this.color, this.position) {
+  Bishop(this.color, this.position, {this.alreadyMoved = false}) {
     assetPath = _getImage();
   }
 
@@ -31,6 +32,12 @@ class Bishop implements Piece {
       }
     } 
     return positions;
+  }
+
+
+  @override
+  void setPosition(Position newPosition) {
+    position = newPosition; 
   }
 
 

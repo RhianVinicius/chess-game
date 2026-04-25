@@ -1,13 +1,14 @@
-import 'package:chess_game/models/piece.dart';
+import 'package:chess_game/models/pieces/piece.dart';
 import 'package:chess_game/models/position.dart';
 
 class Knight implements Piece {
   @override final String color;
   @override Position position;
   @override late String assetPath;
+  @override bool alreadyMoved;
   static const List<List<int>> jumps = [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]];
 
-  Knight(this.color, this.position) {
+  Knight(this.color, this.position, {this.alreadyMoved = false}) {
     assetPath = _getImage();
   }
 
@@ -23,6 +24,11 @@ class Knight implements Piece {
       if (newPosition != null) positions.add(newPosition);
     }
     return positions;
+  }
+
+  @override
+  void setPosition(Position newPosition) {
+    position = newPosition; 
   }
 
   String _getImage() {
